@@ -803,8 +803,8 @@ class BurpExtender(IBurpExtender, IHttpListener, ITab, IExtensionStateListener, 
         callbacks.registerContextMenuFactory(self)
         self.load_settings()
         print("Extension loaded")
-        if not distutils.spawn.find_executable("jsluice"):
-            print("[WARNING] jsluice binary not found, please install it and ensure it is in your $PATH otherwise the extension will not work.")
+        if not distutils.spawn.find_executable("/Users/fuomag9/go/bin/jsluice"):
+            print("[ERROR] Remember to have the jsluice binary at /Users/fuomag9/go/bin/jsluice or this extension will not work!")
         self.threads = []
         if os.path.exists(self.directory + self.monitored_urls_path):
             self.monitored_urls = self.get_monitored_urls()
@@ -1328,7 +1328,7 @@ class BurpExtender(IBurpExtender, IHttpListener, ITab, IExtensionStateListener, 
             file_name_hash = md5(file_name.encode()).hexdigest()
             file_path = self.directory + "/" + host + "_" + file_name_hash
             monitor_file_path = self.directory + self.monitored_urls_directory + host + "_" + file_name_hash
-            urls_command = "jsluice urls " + file_path
+            urls_command = "/Users/fuomag9/go/bin/jsluice urls " + file_path
             with open(file_path, "w") as f:
                 f.write(response_body)
             process_urls = subprocess.Popen(urls_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -1354,7 +1354,7 @@ class BurpExtender(IBurpExtender, IHttpListener, ITab, IExtensionStateListener, 
                     with open(monitor_file_path, "w") as f:
                         f.write(json.dumps(urls_stdout))
             if self.secrets_checkbox.isSelected():
-                secrets_command = "jsluice secrets " + file_path
+                secrets_command = "/Users/fuomag9/go/bin/jsluice secrets " + file_path
                 process_secrets = subprocess.Popen(secrets_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 secrets_stdout, stderr2 = process_secrets.communicate()
 
